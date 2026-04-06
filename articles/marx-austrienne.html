@@ -4,10 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>De Marx à l'Ecole Autrichienne</title>
+    <style>
+        :root {
+            --classical-color: #f4a261;
+            --marxist-color: #2a9d8f;
+            --austrian-color: #264653;
+            --libertarian-color: #e76f51;
+        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .hero { 
+            background: var(--austrian-color); 
+            padding: 50px; 
+            text-align: center; 
+            animation: fadeIn 2s;
+        }
+        @keyframes fadeIn { opacity: 0; transform: translateY(-50%); }
+        .thinker-card { display: inline-block; width: 200px; margin: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .thinker-card.visible { opacity: 1; transform: translateY(0); }
+    </style>
 </head>
 <body>
-    <h1>De Marx à l'Ecole Autrichienne</h1>
-    <p>Article by @brivaelfr</p>
-    <p>... (your complete HTML content goes here) ...</p>
+    <div class="hero">
+        <h1>De Marx à l'Ecole Autrichienne</h1>
+        <p>Explorez la transition entre deux grandes écoles de pensée économique.</p>
+    </div>
+    <div id="thinkers"></div>
+    <script>
+        const thinkers = [
+            'Adam Smith', 'David Ricardo', 'Jean-Baptiste Say', 'Karl Marx',
+            'Carl Menger', 'William Stanley Jevons', 'Leon Walras', 'Eugen von Bohm-Bawerk',
+            'Ludwig von Mises', 'Friedrich Hayek'
+        ];
+        const thinkersContainer = document.getElementById('thinkers');
+        thinkers.forEach(thinker => {
+            const card = document.createElement('div');
+            card.className = 'thinker-card';
+            card.innerText = thinker;
+            thinkersContainer.appendChild(card);
+        });
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        document.querySelectorAll('.thinker-card').forEach(card => observer.observe(card));
+    </script>
 </body>
 </html>
